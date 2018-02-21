@@ -51,11 +51,11 @@ import org.junit.runner.RunWith;
 public class BookStoreIT {
 
     private static final String BASEPATH = System.getProperty("user.dir");
-    String path = BASEPATH.concat("\\collections\\runners\\backstepbystep-paso3CollectionRunner.bat");
+    String path = BASEPATH.concat("\\collections\\runners\\backstepbystep-paso4CollectionRunner.bat");
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "backstepbystep-web.war")
+        return ShrinkWrap.create(WebArchive.class, "frontstepbystep-web.war")
                 // Se agrega las dependencias
                 .addAsLibraries(Maven.resolver().loadPomFromFile("pom.xml")
                         .importRuntimeDependencies().resolve()
@@ -75,11 +75,10 @@ public class BookStoreIT {
 
         FileWriter wrt = new FileWriter(path);
         try {
-            wrt.write("newman run ".concat(BASEPATH.concat("\\collections\\backstepbystep-paso3.postman_collection.json").concat(" --disable-unicode")));
+            wrt.write("newman run ".concat(BASEPATH.concat("\\collections\\backstepbystep-paso4.postman_collection.json").concat(" --disable-unicode")));
             wrt.flush();
             wrt.close();
         } catch (Exception e) {
-
         }
 
     }
@@ -94,7 +93,7 @@ public class BookStoreIT {
 
         try {
             String prop = System.getProperty("user.dir");
-            Process process = Runtime.getRuntime().exec(prop + "\\collections\\runners\\backstepbystep-paso3CollectionRunner.bat");
+            Process process = Runtime.getRuntime().exec(prop + "\\collections\\runners\\backstepbystep-paso4CollectionRunner.bat");
 
             InputStream inputStream = process.getInputStream();
             BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream));

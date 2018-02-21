@@ -30,7 +30,6 @@ import co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bookstore.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.bookstore.mappers.WebApplicationExceptionMapper;
 import co.edu.uniandes.csw.bookstore.persistence.EditorialPersistence;
-//simport java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -205,6 +204,16 @@ public class EditorialResource {
 
     }
 
+    /**
+     * Conexión con el servicio de libros para una editorial. {@link ReviewResource}
+     * 
+     * Este método conecta la ruta de /editorials con las rutas de /books que dependen
+     * de la editorial, es una redirección al servicio que maneja el segmento de la 
+     * URL que se encarga de los libros.
+     * 
+     * @param editorialsId El ID de la editorial con respecto al cual se accede al servicio.
+     * @return El servicio de Libros para esa editorial en paricular.
+     */
     @Path("{editorialsId: \\d+}/books")
     public Class<EditorialBooksResource> getEditorialBooksResource(@PathParam("editorialsId") Long editorialsId) {
         EditorialEntity entity = editorialLogic.getEditorial(editorialsId);
@@ -226,7 +235,7 @@ public class EditorialResource {
      * @return la lista de editoriales en forma DTO (json)
      */
     private List<EditorialDetailDTO> listEntity2DetailDTO(List<EditorialEntity> entityList) {
-        List<EditorialDetailDTO> list = new ArrayList();
+        List<EditorialDetailDTO> list = new ArrayList<EditorialDetailDTO>();
         for (EditorialEntity entity : entityList) {
             list.add(new EditorialDetailDTO(entity));
         }

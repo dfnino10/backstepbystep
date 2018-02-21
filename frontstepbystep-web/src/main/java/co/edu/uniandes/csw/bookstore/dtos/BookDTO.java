@@ -68,7 +68,6 @@ public class BookDTO {
     private String description;
     private Date publishingdate;
 
-
     /**
      * Constructor por defecto
      */
@@ -87,7 +86,6 @@ public class BookDTO {
             this.image = bookE.getImage();
             this.description = bookE.getDescription();
             this.publishingdate = bookE.getPublishDate();
-           
         }
     }
 
@@ -104,7 +102,7 @@ public class BookDTO {
         bookE.setImage(this.image);
         bookE.setDescription(this.description);
         bookE.setPublishDate(this.publishingdate);
-       
+
         return bookE;
     }
 

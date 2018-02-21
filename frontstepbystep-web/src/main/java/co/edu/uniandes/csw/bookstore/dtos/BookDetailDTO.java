@@ -24,6 +24,9 @@ SOFTWARE.
 package co.edu.uniandes.csw.bookstore.dtos;
 
 import co.edu.uniandes.csw.bookstore.entities.BookEntity;
+import co.edu.uniandes.csw.bookstore.entities.ReviewEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que extiende de {@link BookDTO} para manejar las relaciones entre
@@ -33,10 +36,13 @@ import co.edu.uniandes.csw.bookstore.entities.BookEntity;
  */
 public class BookDetailDTO extends BookDTO {
 
+
     /*
     * Relación a una editorial
      */
     private EditorialDTO editorial;
+    // relación  cero o muchos reviews 
+    private List<ReviewDTO> reviews;
 
     public BookDetailDTO() {
         super();
@@ -54,8 +60,14 @@ public class BookDetailDTO extends BookDTO {
         } else {
             entity.setEditorial(null);
         }
+        if (entity.getReviews() != null) {
+            reviews = new ArrayList<>();
+            for (ReviewEntity entityReview : entity.getReviews()) {
+                reviews.add(new ReviewDTO(entityReview));
+            }
+        }
     }
-
+    
     /**
      * Transformar el DTO a una entidad
      * @return La entidad que representa el libro.
@@ -66,12 +78,36 @@ public class BookDetailDTO extends BookDTO {
         if (this.getEditorial() != null) {
             bookE.setEditorial(this.getEditorial().toEntity());
         }
+        if (getReviews() != null) {
+            List<ReviewEntity> reviewsEntity = new ArrayList<>();
+            for (ReviewDTO dtoReview : getReviews()) {
+                reviewsEntity.add(dtoReview.toEntity());
+            }
+            bookE.setReviews(reviewsEntity);
+        }
         return bookE;
+
     }
 
     /**
-     * Devuelve la editorial asociada a este libro.
-     * @return the editorial
+     * Devuelve las reseñas asociadas a este libro
+     * @return Lista de DTOs de Reseñas
+     */
+    public List<ReviewDTO> getReviews() {
+        return reviews;
+    }
+
+    /**
+     * Modifica las reseñas de este libro.
+     * @param reviews Las nuevas reseñas
+     */
+    public void setReviews(List<ReviewDTO> reviews) {
+        this.reviews = reviews;
+    }
+
+    /**
+     * Devuelve la editorial asociada a este libro
+     * @return DTO de Editorial
      */
     public EditorialDTO getEditorial() {
         return editorial;
