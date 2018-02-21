@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.bookstore.dtos;
 
+import co.edu.uniandes.csw.bookstore.entities.AuthorEntity;
 import co.edu.uniandes.csw.bookstore.entities.BookEntity;
 import co.edu.uniandes.csw.bookstore.entities.ReviewEntity;
 import java.util.ArrayList;
@@ -36,13 +37,15 @@ import java.util.List;
  */
 public class BookDetailDTO extends BookDTO {
 
-
     /*
     * Relación a una editorial
      */
     private EditorialDTO editorial;
     // relación  cero o muchos reviews 
     private List<ReviewDTO> reviews;
+
+    // relación  cero o muchos author
+    private List<AuthorDTO> authors;
 
     public BookDetailDTO() {
         super();
@@ -66,7 +69,14 @@ public class BookDetailDTO extends BookDTO {
                 reviews.add(new ReviewDTO(entityReview));
             }
         }
+        if (entity.getAuthors() != null) {
+            authors = new ArrayList<>();
+            for (AuthorEntity entityAuthor : entity.getAuthors()) {
+                authors.add(new AuthorDTO(entityAuthor));
+            }
+        }
     }
+    
     
     /**
      * Transformar el DTO a una entidad
@@ -85,8 +95,14 @@ public class BookDetailDTO extends BookDTO {
             }
             bookE.setReviews(reviewsEntity);
         }
+        if (authors != null) {
+            List<AuthorEntity> authorsEntity = new ArrayList<>();
+            for (AuthorDTO dtoAuthor : authors) {
+                authorsEntity.add(dtoAuthor.toEntity());
+            }
+            bookE.setAuthors(authorsEntity);
+        }
         return bookE;
-
     }
 
     /**
@@ -106,18 +122,34 @@ public class BookDetailDTO extends BookDTO {
     }
 
     /**
-     * Devuelve la editorial asociada a este libro
-     * @return DTO de Editorial
+     * Devuelve los autores del libro
+     * @return DTO de Autores
      */
-    public EditorialDTO getEditorial() {
-        return editorial;
+    public List<AuthorDTO> getAuthors() {
+        return authors;
     }
 
-    /**
+   /**
+    * Modifica los autores del libro
+    * @param authors Lista de autores 
+    */
+    public void setAuthors(List<AuthorDTO> authors) {
+        this.authors = authors;
+    }
+
+     /**
      * Modifica la editorial asociada a este libro.
      * @param editorial the editorial to set
      */
     public void setEditorial(EditorialDTO editorial) {
         this.editorial = editorial;
+    }
+
+    /**
+     * Devuelve la editorial asociada a este libro
+     * @return DTO de Editorial
+     */
+    public EditorialDTO getEditorial() {
+        return editorial;
     }
 }

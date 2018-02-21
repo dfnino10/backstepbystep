@@ -23,7 +23,7 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.bookstore.tests.postman;
 
-import co.edu.uniandes.csw.bookstore.resources.EditorialResource;
+import co.edu.uniandes.csw.bookstore.resources.BookResource;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,7 +51,7 @@ import org.junit.runner.RunWith;
 public class BookStoreIT {
 
     private static final String BASEPATH = System.getProperty("user.dir");
-    String path = BASEPATH.concat("\\collections\\runners\\backstepbystep-paso4CollectionRunner.bat");
+    String path = BASEPATH.concat("\\collections\\runners\\backstepbystep-paso5CollectionRunner.bat");
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -61,7 +61,7 @@ public class BookStoreIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(EditorialResource.class.getPackage())
+                .addPackage(BookResource.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // El archivo beans.xml es necesario para injeccion de dependencias.
@@ -75,7 +75,7 @@ public class BookStoreIT {
 
         FileWriter wrt = new FileWriter(path);
         try {
-            wrt.write("newman run ".concat(BASEPATH.concat("\\collections\\backstepbystep-paso4.postman_collection.json").concat(" --disable-unicode")));
+            wrt.write("newman run ".concat(BASEPATH.concat("\\collections\\backstepbystep-paso5.postman_collection.json").concat(" --disable-unicode")));
             wrt.flush();
             wrt.close();
         } catch (Exception e) {
@@ -93,7 +93,7 @@ public class BookStoreIT {
 
         try {
             String prop = System.getProperty("user.dir");
-            Process process = Runtime.getRuntime().exec(prop + "\\collections\\runners\\backstepbystep-paso4CollectionRunner.bat");
+            Process process = Runtime.getRuntime().exec(prop + "\\collections\\runners\\backstepbystep-paso5CollectionRunner.bat");
 
             InputStream inputStream = process.getInputStream();
             BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream));

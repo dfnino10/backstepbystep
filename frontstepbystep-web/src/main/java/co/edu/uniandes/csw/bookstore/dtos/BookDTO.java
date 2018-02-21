@@ -86,6 +86,7 @@ public class BookDTO {
             this.image = bookE.getImage();
             this.description = bookE.getDescription();
             this.publishingdate = bookE.getPublishDate();
+            
         }
     }
 
@@ -102,15 +103,15 @@ public class BookDTO {
         bookE.setImage(this.image);
         bookE.setDescription(this.description);
         bookE.setPublishDate(this.publishingdate);
-
+     
         return bookE;
     }
-
+    
     /**
      * Devuelve el ID del libro
      * @return the id
      */
-    public Long getId() {
+        public Long getId() {
         return id;
     }
 

@@ -26,31 +26,7 @@ package co.edu.uniandes.csw.bookstore.dtos;
 import co.edu.uniandes.csw.bookstore.entities.ReviewEntity;
 
 /**
- * ReviewDTO Objeto de transferencia de datos de Reseñas. Los DTO contienen las
- * represnetaciones de los JSON que se transfieren entre el cliente y el
- * servidor.
  *
- * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
- * <pre>
- *   {
- *      "id": number,
- *      "name: string,
- *      "source": string,
- *      "description": string
- *   }
- * </pre>
- * Por ejemplo una reseña se representa asi:<br>
- * 
- * <pre>
- * 
- *   {
- *      "id": 189251,
- *      "name: "Nombre",
- *      "source": "Fuente de esta reseña",
- *      "description": "Este libro parece muy interesante"
- *   }
- *
- * </pre>
  * @author ISIS2603
  */
 public class ReviewDTO {
@@ -69,10 +45,6 @@ public class ReviewDTO {
     public ReviewDTO() {
     }
 
-    /**
-     * Constructor a partir de una entidad
-     * @param entity La entidad de la cual se construye el DTO
-     */
     public ReviewDTO(ReviewEntity entity) {
 
         this.id = entity.getId();
@@ -81,10 +53,6 @@ public class ReviewDTO {
         this.description = entity.getDescription();
     }
 
-    /**
-     * Método para transformar del DTO a una entidada.
-     * @return La entidad de esta reseña.
-     */
     public ReviewEntity toEntity() {
         ReviewEntity entity = new ReviewEntity();
         entity.setId(this.id);
@@ -95,7 +63,6 @@ public class ReviewDTO {
     }
 
     /**
-     * Devuelve el ID de la reseña.
      * @return the id
      */
     public Long getId() {
@@ -103,7 +70,6 @@ public class ReviewDTO {
     }
 
     /**
-     * Modifica el ID de la reseña.
      * @param id the id to set
      */
     public void setId(Long id) {
@@ -111,7 +77,6 @@ public class ReviewDTO {
     }
 
     /**
-     * Devuelve el nombre de la reseña.
      * @return the name
      */
     public String getName() {
@@ -119,7 +84,6 @@ public class ReviewDTO {
     }
 
     /**
-     * Modifica el ID de la reseña.
      * @param name the name to set
      */
     public void setName(String name) {
@@ -127,7 +91,6 @@ public class ReviewDTO {
     }
 
     /**
-     * Devuelve la fuente de la reseña.
      * @return the source
      */
     public String getSource() {
@@ -135,7 +98,6 @@ public class ReviewDTO {
     }
 
     /**
-     * Modifica la fuente de la reseña.
      * @param source the source to set
      */
     public void setSource(String source) {
@@ -143,7 +105,6 @@ public class ReviewDTO {
     }
 
     /**
-     * Devuelve la descripción de la reseña.
      * @return the description
      */
     public String getDescription() {
@@ -151,7 +112,6 @@ public class ReviewDTO {
     }
 
     /**
-     * Modifica la descripción de la reseña.
      * @param description the description to set
      */
     public void setDescription(String description) {
