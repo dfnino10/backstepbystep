@@ -20,9 +20,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
+ */
 package co.edu.uniandes.csw.bookstore.dtos;
+
+import co.edu.uniandes.csw.bookstore.entities.BookEntity;
 import co.edu.uniandes.csw.bookstore.entities.EditorialEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que extiende de {@link EditorialDTO} para manejar las relaciones entre
@@ -31,6 +35,11 @@ import co.edu.uniandes.csw.bookstore.entities.EditorialEntity;
  * @author ISIS2603
  */
 public class EditorialDetailDTO extends EditorialDTO {
+
+    /*
+    * Esta lista de tipo BookDTO contiene los books que estan asociados a una editorial
+    */
+    private List<BookDTO> books;
 
     /**
      * Constructor por defecto
@@ -45,6 +54,13 @@ public class EditorialDetailDTO extends EditorialDTO {
      */
     public EditorialDetailDTO(EditorialEntity entity) {
         super(entity);
+        if (entity != null) {
+            books = new ArrayList();
+            for (BookEntity entityBook : entity.getBooks()) {
+                books.add(new BookDTO(entityBook));
+            }
+
+        }
     }
 
     /**
@@ -55,7 +71,30 @@ public class EditorialDetailDTO extends EditorialDTO {
     @Override
     public EditorialEntity toEntity() {
         EditorialEntity editorialE = super.toEntity();
+        if (books != null) {
+            List<BookEntity> booksEntity = new ArrayList();
+            for (BookDTO dtoBook : books) {
+                booksEntity.add(dtoBook.toEntity());
+            }
+            editorialE.setBooks(booksEntity);
+        }
         return editorialE;
+    }
+
+    /**
+     * Devuelve la lista de libros de la editorial.
+     * @return the books
+     */
+    public List<BookDTO> getBooks() {
+        return books;
+    }
+
+    /**
+     * Modifica la lista de libros de la editorial.
+     * @param books the books to set
+     */
+    public void setBooks(List<BookDTO> books) {
+        this.books = books;
     }
 
 }

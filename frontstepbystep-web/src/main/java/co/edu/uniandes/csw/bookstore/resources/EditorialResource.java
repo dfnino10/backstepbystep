@@ -30,6 +30,7 @@ import co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bookstore.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.bookstore.mappers.WebApplicationExceptionMapper;
 import co.edu.uniandes.csw.bookstore.persistence.EditorialPersistence;
+//simport java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -107,7 +108,7 @@ public class EditorialResource {
 
     /**
      * <h1>GET /api/editorials : Obtener todas las editoriales.</h1>
-     * 
+     *
      * <pre>Busca y devuelve todas las editoriales que existen en la aplicacion.
      * 
      * Codigos de respuesta:
@@ -121,11 +122,11 @@ public class EditorialResource {
         return listEntity2DetailDTO(editorialLogic.getEditorials());
     }
 
-     /**
+    /**
      * <h1>GET /api/editorials/{id} : Obtener editorial por id.</h1>
-     * 
+     *
      * <pre>Busca la editorial con el id asociado recibido en la URL y la devuelve.
-     * 
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Devuelve la editorial correspondiente al id.
@@ -151,9 +152,9 @@ public class EditorialResource {
     /**
      * <h1>PUT /api/editorials/{id} : Actualizar editorial con el id dado.</h1>
      * <pre>Cuerpo de petición: JSON {@link EditorialDetailDTO}.
-     * 
+     *
      * Actualiza la editorial con el id recibido en la URL con la informacion que se recibe en el cuerpo de la petición.
-     * 
+     *
      * Codigos de respuesta:
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Actualiza la editorial con el id dado con la información enviada como parámetro. Retorna un objeto identico.</code> 
@@ -179,9 +180,9 @@ public class EditorialResource {
 
     /**
      * <h1>DELETE /api/editorials/{id} : Borrar editorial por id.</h1>
-     * 
+     *
      * <pre>Borra la editorial con el id asociado recibido en la URL.
-     * 
+     *
      * Códigos de respuesta:<br>
      * <code style="color: mediumseagreen; background-color: #eaffe0;">
      * 200 OK Elimina la editorial correspondiente al id dado.</code>
@@ -201,6 +202,16 @@ public class EditorialResource {
             throw new WebApplicationException("El recurso /editorials/" + id + " no existe.", 404);
         }
         editorialLogic.deleteEditorial(id);
+
+    }
+
+    @Path("{editorialsId: \\d+}/books")
+    public Class<EditorialBooksResource> getEditorialBooksResource(@PathParam("editorialsId") Long editorialsId) {
+        EditorialEntity entity = editorialLogic.getEditorial(editorialsId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /editorials/" + editorialsId + " no existe.", 404);
+        }
+        return EditorialBooksResource.class;
     }
 
     /**
@@ -215,7 +226,7 @@ public class EditorialResource {
      * @return la lista de editoriales en forma DTO (json)
      */
     private List<EditorialDetailDTO> listEntity2DetailDTO(List<EditorialEntity> entityList) {
-        List<EditorialDetailDTO> list = new ArrayList<>();
+        List<EditorialDetailDTO> list = new ArrayList();
         for (EditorialEntity entity : entityList) {
             list.add(new EditorialDetailDTO(entity));
         }
